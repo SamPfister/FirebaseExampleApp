@@ -20,11 +20,13 @@ public class MainActivity extends AppCompatActivity {
     private int dateMonth;
     private int dateDay;
     private int dateYear;
+    FirebaseDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dbHelper = new FirebaseDatabaseHelper();
 
         //  Video to learn basic access to CalendarView Data
         //  https://www.youtube.com/watch?v=WNBE_3ZizaA
@@ -59,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
            Log.i(TAG, "Trying to add: " + eventName + ", " + dateSelected);
+           Event newEvent = new Event (eventName, dateSelected, dateYear, dateMonth, dateDay);
+           eventNameET.setText("");
+           dbHelper.addEvent(newEvent);
         }
     }
 
