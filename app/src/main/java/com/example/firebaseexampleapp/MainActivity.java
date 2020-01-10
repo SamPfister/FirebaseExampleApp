@@ -1,8 +1,10 @@
 package com.example.firebaseexampleapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +13,12 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,5 +87,45 @@ public class MainActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+    // code to add to MainActivity.java
+
+
+// add this method to the end
+// call this method in the onClick for the show data method in the activity_main.xml show events button
+
+
+    public void onRetrieve(View v){
+        dbHelper.getDatabaseReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Event> currentEvents = new ArrayList<Event>();
+
+                for (DataSnapshot item : dataSnapshot.getChildren())
+                {
+                    Event e = new Event(
+                            item.child("eventName").getValue().toString(),
+                            item.child("eventDate").getValue().toString(),
+                            Integer.valueOf(item.child("year").getValue().toString()),
+                            Integer.valueOf(item.child("month").getValue().toString()),
+                            Integer.valueOf(item.child("day").getValue().toString()),
+                            item.child("key").getValue().toString());
+                    currentEvents.add(e);
+                }
+
+                // starts intent that will display this new data that has been saved into the arraylist
+                // since we used a single value event the data will not continually update
+
+                Intent intent = new Intent(MainActivity.this, DisplayEventsActivity.class);
+                intent.putExtra("events", currentEvents);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.i("callError", "There has been an Error with database retrieval");
+            }
+        });
+
     }
 }

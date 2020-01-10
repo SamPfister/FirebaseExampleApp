@@ -50,8 +50,6 @@ public class FirebaseDatabaseHelper {
 
             }
         });
-
-
     }
 
     public DatabaseReference getDatabaseReference() {
