@@ -96,36 +96,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onRetrieve(View v){
-        dbHelper.getDatabaseReference().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Event> currentEvents = new ArrayList<Event>();
-
-                for (DataSnapshot item : dataSnapshot.getChildren())
-                {
-                    Event e = new Event(
-                            item.child("eventName").getValue().toString(),
-                            item.child("eventDate").getValue().toString(),
-                            Integer.valueOf(item.child("year").getValue().toString()),
-                            Integer.valueOf(item.child("month").getValue().toString()),
-                            Integer.valueOf(item.child("day").getValue().toString()),
-                            item.child("key").getValue().toString());
-                    currentEvents.add(e);
-                }
-
-                // starts intent that will display this new data that has been saved into the arraylist
-                // since we used a single value event the data will not continually update
-
                 Intent intent = new Intent(MainActivity.this, DisplayEventsActivity.class);
-                intent.putExtra("events", currentEvents);
+                intent.putExtra("events", dbHelper.getEventsArrayList());
                 startActivity(intent);
             }
 
-            @Override
+
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.i("callError", "There has been an Error with database retrieval");
             }
-        });
-
-    }
 }

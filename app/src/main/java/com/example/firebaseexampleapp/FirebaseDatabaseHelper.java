@@ -15,6 +15,10 @@ public class FirebaseDatabaseHelper {
     private DatabaseReference mReferenceEvents;
     private ArrayList<Event> eventsArrayList = new ArrayList<>();
 
+    public ArrayList<Event> getEventsArrayList(){
+        return eventsArrayList;
+    }
+
     public FirebaseDatabaseHelper() {
         // this will reference the node called events and all its children.
         mReferenceEvents = FirebaseDatabase.getInstance().getReference("events");

@@ -36,6 +36,8 @@ public class DisplayEventsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_events);
+        // add this code to the onCreate method in the DisplayEventsActivity.java.
+
 
         // This Activity received an arraylist of all the events pulled from firebase to populate the ListView with
         Intent intent = getIntent();
@@ -46,6 +48,22 @@ public class DisplayEventsActivity extends AppCompatActivity {
         // CustomAdapter is an inner class defined below that details how to adapt this arraylist of data
         CustomAdapter customAdapter = new CustomAdapter();
         allEventsListView.setAdapter(customAdapter);
+
+        // Referenced for syntax: https://www.youtube.com/watch?v=XyxT8IQoZkc
+        // Create a setOnItemClickListener for the listView to find out which element they clicked on
+
+        allEventsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Event event = myEvents.get(i);
+
+                // start an intent to load the page to edit this element that has been clicked on
+                Intent intent = new Intent(DisplayEventsActivity.this, EditEventActivity.class);
+                intent.putExtra("event", event);
+                startActivity(intent);
+            }
+        });
 
     }
 
