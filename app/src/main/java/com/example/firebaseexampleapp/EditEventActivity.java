@@ -34,6 +34,8 @@ public class EditEventActivity extends AppCompatActivity {
         eventDateET.setText(eventDateToUpdate);
     }
 
+
+
     public void updateEventData(View v) {
         String newName = eventNameET.getText().toString();
         String newDate = eventDateET.getText().toString();

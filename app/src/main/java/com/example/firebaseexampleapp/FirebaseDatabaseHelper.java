@@ -97,6 +97,11 @@ public class FirebaseDatabaseHelper {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("events").child(key);
         ref.removeValue();
     }
+
+    public void deleteAll() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("events");
+        ref.removeValue();
+    }
 }
 
 

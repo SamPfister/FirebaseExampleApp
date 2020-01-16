@@ -77,6 +77,16 @@ public class DisplayEventsActivity extends AppCompatActivity {
     /**Referred to this video regarding CustomAdapter and creating the custom class:
      * https://www.youtube.com/watch?v=FKUlw7mFXRM -->
      **/
+    FirebaseDatabaseHelper dbHelper = new FirebaseDatabaseHelper();
+
+    public void deleteAllEvents(View v){
+        dbHelper.deleteAll();
+        onHome(v);
+    }
+    public void onHome(View v){
+        Intent intent = new Intent(DisplayEventsActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 
     class CustomAdapter extends BaseAdapter {
 
@@ -148,6 +158,12 @@ public class DisplayEventsActivity extends AppCompatActivity {
          *         which image to use
          */
         private int getMonth(Event e) {
+            String birthday = e.getEventName();
+            birthday.toLowerCase();
+
+            if (birthday.contains("birthday") || birthday.contains("bday") ) {
+                return R.drawable.birthday;
+            }
             int month = e.getMonth();
             if (month == 12 || month == 1 || month == 2)
                 return R.drawable.winter;

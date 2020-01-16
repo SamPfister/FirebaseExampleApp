@@ -5,10 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DisplayEventsActivity"
-    android:background="@color/colorBackground">
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/eventList">
+        android:layout_height="wrap_content"
+        android:id="@+id/eventList"
+        android:layout_marginBottom="90dp">
     </ListView>
+
+    <Button
+        android:id="@+id/deleteAllButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete All Events"
+        android:onClick="deleteAllEvents"
+        >
+    </Button>
+
+
 </LinearLayout>
